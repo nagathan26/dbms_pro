@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    
+    <p>Welcome, {{ session.admin_username }}! <a href="{{ url_for('admin.logout') }}">Logout</a></p>
+    
+    <h2>Events</h2>
+    <p><a href="{{ url_for('admin.add_event') }}">Add New Event</a></p>
+    
+    {% if events %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Venue</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Max Participants</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{{ event.name }}</td>
+                <td>{{ event.category_name }}</td>
+                <td>{{ event.venue }}</td>
+                <td>{{ event.date }}</td>
+                <td>{{ event.time }}</td>
+                <td>{{ event.max_participants }}</td>
+                <td>
+                    <a href="{{ url_for('admin.edit_event', event_id=event.id) }}">Edit</a> |
+                    <a href="{{ url_for('admin.delete_event', event_id=event.id) }}" onclick="return confirm('Are you sure?')">Delete</a> |
+                    <a href="{{ url_for('admin.view_participants', event_id=event.id) }}">View Participants</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No events found.</p>
+    {% endif %}
+    
+    <p><a href="/">Back to Home</a></p>
+</body>
+</html>

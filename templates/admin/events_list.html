@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Fest Events</title>
+</head>
+<body>
+    <h1>College Fest Events</h1>
+    
+    {% if events %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Venue</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.name }}</td>
+                <td>{{ event.category_name }}</td>
+                <td>{{ event.description }}</td>
+                <td>{{ event.venue }}</td>
+                <td>{{ event.date }}</td>
+                <td>{{ event.time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <p>
+        <a href="{{ url_for('student.register') }}">Register for Events</a>
+    </p>
+    {% else %}
+    <p>No events are currently available.</p>
+    {% endif %}
+    
+    <p><a href="/">Back to Home</a></p>
+</body>
+</html>

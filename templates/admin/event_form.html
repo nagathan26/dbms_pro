@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if event %}Edit{% else %}Add{% endif %} Event</title>
+</head>
+<body>
+    <h1>{% if event %}Edit{% else %}Add{% endif %} Event</h1>
+    
+    <form method="POST">
+        <div>
+            <label for="name">Event Name:</label>
+            <input type="text" id="name" name="name" value="{{ event.name if event else '' }}" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4">{{ event.description if event else '' }}</textarea>
+        </div>
+        <div>
+            <label for="category_id">Category:</label>
+            <select id="category_id" name="category_id" required>
+                <option value="">-- Select Category --</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if event and event.category_id == category.id %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="venue">Venue:</label>
+            <input type="text" id="venue" name="venue" value="{{ event.venue if event else '' }}" required>
+        </div>
+        <div>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" value="{{ event.date if event else '' }}" required>
+        </div>
+        <div>
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" value="{{ event.time if event else '' }}" required>
+        </div>
+        <div>
+            <label for="max_participants">Max Participants:</label>
+            <input type="number" id="max_participants" name="max_participants" value="{{ event.max_participants if event else '' }}" required>
+        </div>
+        <div>
+            <button type="submit">Save</button>
+            <a href="{{ url_for('admin.dashboard') }}">Cancel</a>
+        </div>
+    </form>
+</body>
+</html>
